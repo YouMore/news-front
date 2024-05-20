@@ -1,60 +1,114 @@
 .newsCard {
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    transition: box-shadow 0.3s ease;
-    width: 80%; /* Увеличивает размер новости */
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .newsCard:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  .cardBody {
-    padding: 20px;
-  }
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  .title {
-    font-size: 1.5em; /* Увеличивает размер заголовка */
-    font-weight: bold;
-  }
-  
-  .userLogin {
-    color: #007bff;
-    cursor: pointer;
-    text-decoration: none;
-    font-size: 1.5em;
-  }
-  
-  .userLogin:hover {
-    text-decoration: underline;
-    font-size: 1.3em;
-  }
-  
-  .description {
-    margin-bottom: 10px;
-    font-size: 1.2em; /* Увеличивает размер описания */
-  }
-  
-  .details {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .detailItem {
-    margin-bottom: 5px;
-  }
-  
-  .detailLabel {
-    font-weight: bold;
-  }
-  
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: box-shadow 0.3s ease;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.newsCard:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.cardBody {
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.title {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.userLogin {
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 1.5em;
+}
+
+.userLogin:hover {
+  text-decoration: underline;
+  font-size: 1.3em;
+}
+
+.description {
+  margin-bottom: 10px;
+  font-size: 1.2em;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+}
+
+.detailItem {
+  margin-bottom: 5px;
+}
+
+.detailLabel {
+  font-weight: bold;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.actionButton {
+  min-width: 120px;
+  border-radius: 20px;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  font-weight: bold;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.actionButton:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.actionButton-danger {
+  background-color: #dc3545;
+  color: white;
+  border-color: #dc3545;
+}
+
+.actionButton-danger:hover {
+  background-color: white;
+  color: #dc3545;
+}
+
+.actionButton-success {
+  background-color: #28a745;
+  color: white;
+  border-color: #28a745;
+}
+
+.actionButton-success:hover {
+  background-color: white;
+  color: #28a745;
+}
+
+.actionButton-warning {
+  background-color: #ffc107;
+  color: black;
+  border-color: #ffc107;
+}
+
+.actionButton-warning:hover {
+  background-color: white;
+  color: #ffc107;
+}

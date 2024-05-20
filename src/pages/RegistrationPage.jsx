@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { Link, useNavigate } from "react-router-dom";
 import Header from '../components/header/Header';
 import axios from '../API/axiosConfig';
+import styles from "../styles/RegistrationPage.module.css";
 
 function RegistrationPage() {
 
@@ -29,24 +30,21 @@ function RegistrationPage() {
 
     return (
         <>
-            <main style={{ display: 'flex', minHeight: '80vh', alignItems: 'center' }}>
-                <div className="container auth-form col-xl-4 col-lg-6 col-md-8 col-sm-11">
-                    <form className="m-4" onSubmit={onSubmit}>
-                        <div className="mb-3">
-                            <label htmlFor="username" className="form-label">Адрес электронной почты</label>
-                            <input type="text" className="form-control" name="username" id="username" required value={login} onChange={(e) => 
-                setLogin(e.target.value)} placeholder='Введите логин'/>
-                        </div>
-                        <div className="mb-3">
-                            <label htmlFor="password" className="form-label">Пароль</label>
-                            <input type="password" className="form-control" name="password" id="password" required value={password} onChange={(e) => 
-            setPassword(e.target.value)} placeholder='Введите пароль'/>
-                        </div>
-                        <button type="submit" className="btn btn-primary">Зарегистрироваться</button>
-                        <Link to="/login" style={{ fontSize: '14px', position: 'relative', top: '8px', left: '5px' }}>Вход в аккаунт</Link>
-                    </form>
+        <main className={styles.container}>
+            <form className={styles.form} onSubmit={onSubmit}>
+                <h4 className={styles.header}>Регистрация</h4>
+                <div className={styles.formGroup}>
+                    <label htmlFor="username" className={styles.label}>Адрес электронной почты</label>
+                    <input type="text" className={styles.input} name="username" id="username" required value={login} onChange={(e) => setLogin(e.target.value)} placeholder="Введите логин"/>
                 </div>
-            </main>
+                <div className={styles.formGroup}>
+                    <label htmlFor="password" className={styles.label}>Пароль</label>
+                    <input type="password" className={styles.input} name="password" id="password" required value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Введите пароль"/>
+                </div>
+                <button type="submit" className={styles.submitBtn}>Зарегистрироваться</button>
+                <Link to="/login" className={styles.loginLink}>Вход в аккаунт</Link>
+            </form>
+        </main>
         </>
     );
 }

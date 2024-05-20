@@ -1,0 +1,96 @@
+.userCard {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    transition: box-shadow 0.3s ease;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .userCard:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .cardBody {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  .leftSide {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+  
+  .userLogin {
+    color: #007bff;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+  
+  .userLogin:hover {
+    text-decoration: underline;
+  }
+  
+  .detailItem {
+    margin-bottom: 10px;
+  }
+  
+  .detailLabel {
+    font-weight: bold;
+  }
+  
+  .roleSelect {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .roleSelect:hover {
+    border-color: #888;
+  }
+  
+  .roleSelect:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+    outline: none;
+  }
+  
+  .roleSelect option {
+    padding: 10px;
+    background-color: #fff;
+  }
+  
+  
+  .rightSide {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .actionButtonDanger {
+    min-width: 120px;
+    border-radius: 20px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #dc3545;
+    color: white;
+    border-color: #dc3545;
+  }
+  
+  .actionButtonDanger:hover {
+    background-color: white;
+    color: #dc3545;
+  }
+  

@@ -46,7 +46,7 @@ const Header = () => {
               <Link to="/" className={styles.navLink}>Главная</Link>
             </li>
             <li className={styles.navItem}>
-              <Link to="/admin-news" className={styles.navLink}>Новости от админов</Link>
+              <Link to="/admins-news" className={styles.navLink}>Новости от админов</Link>
             </li>
             <li className={styles.navItem}>
               <Link to="/moderator-panel" className={styles.navLink}>Панель модератора</Link>
@@ -54,6 +54,11 @@ const Header = () => {
             <li className={styles.navItem}>
               <Link to="/admin-panel" className={styles.navLink}>Панель администратора</Link>
             </li>
+            {isLoggedIn && (
+              <li className={styles.navItem}>
+                <Link to="/news-create" className={styles.navLink}>Создать новость</Link>
+              </li>
+            )}
           </ul>
         </div>
         {isLoggedIn && (
@@ -62,7 +67,7 @@ const Header = () => {
             {isDropdownOpen && (
               <ul className={styles.dropdownMenu}>
                 <li className={styles.dropdownMenuItem}>
-                  <Link to={`/user-profile/${id}`} className={styles.dropdownLink}>Личный кабинет</Link>
+                  <Link to={`/user-page/${id}`} className={styles.dropdownLink}>Личный кабинет</Link>
                 </li>
                 <li className={styles.dropdownMenuItem}>
                   <Link to="/login" onClick={handleLogout} className={styles.logoutButton}>Выйти</Link>

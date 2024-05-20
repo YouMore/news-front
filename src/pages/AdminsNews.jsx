@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import NewsList from "../components/newsList/NewsList";
-import NewsService from "../API/NewsService";
-import { useFetching } from "../hooks/useFetching";
 import axios from "../API/axiosConfig";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
-function UsersNews() {
+function AdminsNews() {
     const router = useNavigate();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userRole, setUserRole] = useState('');
@@ -15,7 +13,6 @@ function UsersNews() {
     const [newslist, setNewslist] = useState([]);
 
     useEffect(() => {
-        // Проверяем наличие токена
         const token = localStorage.getItem('auth_token');
         if (token) {
             const decoded = jwtDecode(token);
@@ -23,16 +20,32 @@ function UsersNews() {
             setUserRole(decoded.a[0]);
         }
 
-        let isMounted = true; // Флаг для отслеживания монтирования компонента
+        let isMounted = true;
 
         const fetchNews = async () => {
             try {
                 const response = await axios.get(`/news`);
-                const moderatedNews = response.data
+                const newsItems = response.data;
+
+                // Получение роли для каждого новостного элемента
+                const newsWithRoles = await Promise.all(newsItems.map(async (newsItem) => {
+                    try {
+                        const userResponse = await axios.get(`/users/${newsItem.user_id}`);
+                        return { ...newsItem, userRole: userResponse.data.role };
+                    } catch (error) {
+                        console.error(`Failed to fetch user role for user ${newsItem.user_id}`, error);
+                        return null;
+                    }
+                }));
+
+                // Фильтрация новостей по роли создателя (ROLE_ADMIN)
+                const filteredNews = newsWithRoles
                                     .filter(newsItem => newsItem.isModerated)
+                                    .filter(newsItem => newsItem && newsItem.userRole === 'ROLE_ADMIN')
                                     .sort((a, b) => new Date(b.date) - new Date(a.date));
+
                 if (isMounted) {
-                    setNewslist(moderatedNews);
+                    setNewslist(filteredNews);
                     setLoading(false);
                 }
             } catch (error) {
@@ -44,24 +57,21 @@ function UsersNews() {
             }
         };
 
-        console.log("Загрузка...");
         fetchNews();
 
-        const intervalId = setInterval(fetchNews, 5000); // Повторяет запрос каждые 5 секунд
+        const intervalId = setInterval(fetchNews, 5000);
 
-        // Очистка интервала и установка флага размонтирования
         return () => {
             clearInterval(intervalId);
             isMounted = false;
         };
-    }, []); // Пустой массив зависимостей, чтобы запрос выполнялся только один раз при монтировании компонента
+    }, []);
 
     if (!isLoggedIn) {
-        router('/login'); // Перенаправляем на страницу входа, если пользователь не авторизован
+        router('/login');
         return null;
     }
 
-    // Проверяем роль пользователя и отображаем компонент ModeratorPanel или блок с сообщением
     return (
         <>
             {loading ? (
@@ -71,7 +81,7 @@ function UsersNews() {
             ) : (
                 <>
                     <h1 style={{ textAlign: "center" }}>
-                        News
+                        Admins News
                     </h1>
                     <NewsList newslist={newslist} />
                 </>
@@ -80,5 +90,4 @@ function UsersNews() {
     );
 }
 
-
-export default UsersNews;
+export default AdminsNews;

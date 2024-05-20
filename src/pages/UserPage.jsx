@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
 import NewsList from "../components/newsList/NewsList";
 import axios from "../API/axiosConfig";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-import styles from '../styles/ModeratorPanel.module.css';
 
-
-function ModeratorPanel() {
+function UserPage() {
     const router = useNavigate();
+    const { id } = useParams();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userRole, setUserRole] = useState('');
+    const [userLogin, setUserLogin] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [newslist, setNewslist] = useState([]);
+    const [newslistNotModerated, setNewslistNotModerated] = useState([]);
 
     useEffect(() => {
         // Проверяем наличие токена
@@ -24,13 +25,20 @@ function ModeratorPanel() {
         }
 
         let isMounted = true; // Флаг для отслеживания монтирования компонента
-
         const fetchNews = async () => {
             try {
-                const response = await axios.get(`/news`);
-                const unmoderatedNews = response.data.filter(newsItem => !newsItem.isModerated);
+                const response = await axios.get(`/news/users/${id}`);
+                const responseUser = await axios.get(`/users/${id}`);
+                setUserLogin(responseUser.data.login);
+                const moderatedNews = response.data
+                                    .filter(newsItem => newsItem.isModerated)
+                                    .sort((a, b) => new Date(b.date) - new Date(a.date));
+                const notModeratedNews = response.data
+                                    .filter(newsItem => !newsItem.isModerated)
+                                    .sort((a, b) => new Date(b.date) - new Date(a.date));
                 if (isMounted) {
-                    setNewslist(unmoderatedNews);
+                    setNewslist(moderatedNews);
+                    setNewslistNotModerated(notModeratedNews);
                     setLoading(false);
                 }
             } catch (error) {
@@ -52,7 +60,7 @@ function ModeratorPanel() {
             clearInterval(intervalId);
             isMounted = false;
         };
-    }, []); // Пустой массив зависимостей, чтобы запрос выполнялся только один раз при монтировании компонента
+    }, [id]); // Передаем зависимость id для повторного запроса при изменении id в адресной строке
 
     if (!isLoggedIn) {
         router('/login'); // Перенаправляем на страницу входа, если пользователь не авторизован
@@ -67,28 +75,22 @@ function ModeratorPanel() {
             ) : error ? (
                 <div>{error}</div>
             ) : (
-                <>
-                    {userRole === 'ROLE_ADMIN' || userRole === 'ROLE_MODERATOR' ? (
-                        <div>
-                                <h1 style={{ textAlign: "center" }}>
-                                    Moderate
-                                </h1>
-                                <NewsList newslist={newslist} />
-                        </div>
-                    ) : (
-                        <div className={styles.notificationContainer}>
-                            <div className={styles.notificationCard}>
-                                <div className={styles.notificationTitle}>Уведомление</div>
-                                <div className={styles.notificationText}>
-                                Вы не являетесь ни администратором, ни модератором
-                                </div>
-                            </div>
-                        </div>
-                    )}
+                <>  
+                    <h1 style={{ textAlign: "center" }}>
+                        User : {userLogin}
+                    </h1>
+                    <h1 style={{ textAlign: "center" }}>
+                        Published news
+                    </h1>
+                    <NewsList newslist={newslist} />
+                    <h1 style={{ textAlign: "center" }}>
+                        Unpublished news
+                    </h1>
+                    <NewsList newslist={newslistNotModerated} />
                 </>
             )}
         </>
     );
 }
 
-export default ModeratorPanel;
+export default UserPage;

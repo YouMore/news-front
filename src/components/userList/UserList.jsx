@@ -1,11 +1,11 @@
 import React from "react";
-import NewsItem from "../newsItem/NewsItem";
+import UserItem from "../userItem/UserItem";
 
-const NewsList = ({ newslist }) => {
-  if (!newslist.length) {
+const UsersList = ({ users }) => {
+  if (!users.length) {
     return (
       <h1 style={{ textAlign: "center" }}>
-        Новости не найдены
+        Пользователи не найдены
       </h1>
     );
   }
@@ -13,12 +13,12 @@ const NewsList = ({ newslist }) => {
   return (
     <div>
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-        {newslist.map(news => 
-          <NewsItem news={news} key={news.id} />
+        {users.map(user => 
+          <UserItem user={user} key={user.id} />
         )}
       </div>
     </div>
   );
 };
 
-export default NewsList;
+export default UsersList;

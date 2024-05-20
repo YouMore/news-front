@@ -8,6 +8,22 @@
     display: flex;
     justify-content: space-between;
   }
+
+  .navItem:not(:last-child) {
+    position: relative;
+  }
+  
+  .navItem:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: -7px;
+    transform: translateY(-50%);
+    height: 24px;
+    width: 1px;
+    background-color: white;
+  }
+  
   
   .leftNav {
     display: flex;

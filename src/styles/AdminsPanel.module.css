@@ -1,0 +1,24 @@
+.notificationContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Выравнивание по центру по вертикали */
+}
+
+.notificationCard {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 50%; /* Ширина блока */
+    padding: 20px;
+}
+
+.notificationTitle {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.notificationText {
+    font-size: 1.2em;
+}
